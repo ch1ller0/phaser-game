@@ -3,7 +3,7 @@ import * as Phaser from "phaser-ce";
 import "pixi";
 
 declare global { // tslint:disable
-  interface IWindow { game: any; }
+  interface Window { game: any; }
 }
 window.game = window.game || {};
 

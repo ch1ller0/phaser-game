@@ -1,7 +1,12 @@
 import * as Phaser from "phaser-ce";
 import { centerGameObjects } from "../utils";
 
-export default class extends Phaser.State {
+interface Splash {
+  loaderBar: any;
+  loaderBg: any;
+}
+
+class Splash extends Phaser.State {
 
   public preload() {
     this.loaderBg = this.add.sprite(this.game.world.centerX, this.game.world.centerY, "loaderBg");
@@ -19,3 +24,5 @@ export default class extends Phaser.State {
     this.state.start("Game");
   }
 }
+
+export default Splash;

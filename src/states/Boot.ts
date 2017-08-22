@@ -1,7 +1,11 @@
 import * as Phaser from "phaser-ce";
 import * as WebFont from "webfontloader";
 
-export default class extends Phaser.State {
+interface Boot {
+  fontsReady: any;
+}
+
+class Boot extends Phaser.State {
   public init() {
     this.stage.backgroundColor = "#EDEEC9";
     this.fontsReady = false;
@@ -33,3 +37,5 @@ export default class extends Phaser.State {
     this.fontsReady = true;
   }
 }
+
+export default Boot;

@@ -1,7 +1,11 @@
 import * as Phaser from "phaser-ce";
 import Mushroom from "../sprites/Mushroom";
 
-export default class extends Phaser.State {
+interface Game {
+    mushroom: any;
+}
+
+class Game extends Phaser.State {
 
   public create() {
     const bannerText = "Phaser + ES6 + Webpack";
@@ -29,3 +33,5 @@ export default class extends Phaser.State {
     }
   }
 }
+
+export default Game;
