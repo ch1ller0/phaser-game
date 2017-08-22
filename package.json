@@ -7,7 +7,11 @@
   "scripts": {
     "start": "webpack --watch --colors",
     "deploy": "webpack --config webpack.production.config.js",
-    "test": "tslint --fix -c tslint.json 'src/**/*.ts'"
+    "test": "tslint --fix -c tslint.json 'src/**/*.ts'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": ["tslint --fix -c tslint.json", "git add"]
   },
   "license": "MIT",
   "devDependencies": {
@@ -18,7 +22,8 @@
     "browser-sync": "^2.18.12",
     "browser-sync-webpack-plugin": "^1.1.4",
     "expose-loader": "^0.7.3",
-    "has-flag": "^2.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.3",
     "ts-loader": "^2.2.2",
     "tslint": "^5.6.0",
     "typescript": "^2.4.1",
