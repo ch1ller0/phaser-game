@@ -1,5 +1,5 @@
-import Phaser from 'phaser'
-import WebFont from 'webfontloader'
+import * as Phaser from 'phaser'
+import * as WebFont from 'webfontloader'
 
 export default class extends Phaser.State {
   init () {

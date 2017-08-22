@@ -56,6 +56,7 @@ module.exports = {
       'phaser': phaser,
       'pixi': pixi,
       'p2': p2
-    }
+    },
+    extensions: ['.js', '.ts']
   }
 }
