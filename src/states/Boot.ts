@@ -7,7 +7,7 @@ interface Boot {
 
 class Boot extends Phaser.State {
   public init() {
-    this.stage.backgroundColor = "#EDEEC9";
+    this.stage.backgroundColor = "#4a8bee";
     this.fontsReady = false;
     this.fontsLoaded = this.fontsLoaded.bind(this);
   }
@@ -25,6 +25,7 @@ class Boot extends Phaser.State {
 
     this.load.image("loaderBg", "./assets/images/loader-bg.png");
     this.load.image("loaderBar", "./assets/images/loader-bar.png");
+    console.log(this);
   }
 
   public render() {

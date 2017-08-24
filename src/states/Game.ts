@@ -1,36 +1,65 @@
 import * as Phaser from "phaser-ce";
-import Mushroom from "../sprites/Mushroom";
+import Hero from "../sprites/Hero";
 
 interface Game {
-    mushroom: any;
+    hero: any;
+    platforms: any;
+    cursors: any;
+    hitPlatform: any;
 }
 
 class Game extends Phaser.State {
 
   public create() {
-    const bannerText = "Phaser + ES6 + Webpack";
-    const banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText);
-    banner.font = "Bangers";
-    banner.padding.set(10, 16);
-    banner.fontSize = 40;
-    banner.fill = "#77BFA3";
-    banner.smoothed = false;
-    banner.anchor.setTo(0.5);
+    this.platforms = this.game.add.group();
+    this.platforms.enableBody = true;
 
-    this.mushroom = new Mushroom({
-      asset: "mushroom",
-      game: this,
-      x: this.world.centerX,
-      y: this.world.centerY,
+    // Here we create the ground.
+    const ground = this.platforms.create(-50, this.game.world.height - 64, "platform");
+    ground.scale.setTo(2, 2);
+    ground.body.immovable = true;
+
+    //  Now let's create two ledges
+    let ledge = this.platforms.create(300, 100, "platform");
+    ledge.scale.setTo(1, 0.5);
+    ledge.body.immovable = true;
+
+    ledge = this.platforms.create(-50, 220, "platform");
+    ledge.scale.setTo(0.5, 0.5);
+    ledge.body.immovable = true;
+
+    this.hero = new Hero({
+      asset: "hero",
+      game,
+      x: 300,
+      y: this.world.height - 94,
     });
 
-    this.game.add.existing(this.mushroom);
+    this.game.add.existing(this.hero);
+    this.cursors = this.game.input.keyboard.createCursorKeys();
   }
+  public update() {
+    this.hitPlatform = this.game.physics.arcade.collide(this.hero, this.platforms);
+    /*console.log(this.hero);
+    this.hero.body.velocity.x = 0;
 
-  public render() {
-    if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32);
+    if (this.cursors.left.isDown) {
+      this.hero.body.velocity.x = -150;
+      this.hero.animations.play('left');
+
+    } else if (this.cursors.right.isDown) {
+      this.hero.body.velocity.x = 150;
+      this.hero.animations.play('right');
+
+    } else {
+      this.hero.animations.stop();
+      this.hero.frame = 4;
     }
+
+    if (this.cursors.up.isDown && this.hero.body.touching.down && this.hitPlatform) {
+      this.hero.body.velocity.y = -300;
+    }*/
+
   }
 }
 
