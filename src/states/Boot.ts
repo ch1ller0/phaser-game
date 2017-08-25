@@ -25,7 +25,6 @@ class Boot extends Phaser.State {
 
     this.load.image("loaderBg", "./assets/images/loader-bg.png");
     this.load.image("loaderBar", "./assets/images/loader-bar.png");
-    console.log(this);
   }
 
   public render() {

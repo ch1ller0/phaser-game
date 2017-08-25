@@ -11,15 +11,15 @@ interface Game {
 class Game extends Phaser.State {
 
   public create() {
-    this.platforms = this.game.add.group();
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    this.platforms = game.add.group();
     this.platforms.enableBody = true;
 
-    // Here we create the ground.
-    const ground = this.platforms.create(-50, this.game.world.height - 64, "platform");
+    const ground = this.platforms.create(-50, game.world.height - 64, "platform");
     ground.scale.setTo(2, 2);
     ground.body.immovable = true;
 
-    //  Now let's create two ledges
     let ledge = this.platforms.create(300, 100, "platform");
     ledge.scale.setTo(1, 0.5);
     ledge.body.immovable = true;
@@ -32,33 +32,36 @@ class Game extends Phaser.State {
       asset: "hero",
       game,
       x: 300,
-      y: this.world.height - 94,
+      y: 0,
     });
 
-    this.game.add.existing(this.hero);
-    this.cursors = this.game.input.keyboard.createCursorKeys();
+    game.add.existing(this.hero);
+    this.cursors = game.input.keyboard.createCursorKeys();
+    this.hero.dir = false;
   }
+
   public update() {
-    this.hitPlatform = this.game.physics.arcade.collide(this.hero, this.platforms);
-    /*console.log(this.hero);
+    this.hitPlatform = game.physics.arcade.collide(this.hero, this.platforms);
     this.hero.body.velocity.x = 0;
 
     if (this.cursors.left.isDown) {
-      this.hero.body.velocity.x = -150;
-      this.hero.animations.play('left');
+      this.hero.body.velocity.x = -200;
+      this.hero.animations.play("left");
+      this.hero.dir = true;
 
     } else if (this.cursors.right.isDown) {
-      this.hero.body.velocity.x = 150;
-      this.hero.animations.play('right');
+      this.hero.body.velocity.x = 200;
+      this.hero.animations.play("right");
+      this.hero.dir = false;
 
     } else {
       this.hero.animations.stop();
-      this.hero.frame = 4;
+      this.hero.frame = this.hero.dir ? 0 : 7;
     }
 
     if (this.cursors.up.isDown && this.hero.body.touching.down && this.hitPlatform) {
-      this.hero.body.velocity.y = -300;
-    }*/
+      this.hero.body.velocity.y = -270;
+    }
 
   }
 }
