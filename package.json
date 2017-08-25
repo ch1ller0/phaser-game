@@ -11,7 +11,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.ts": ["tslint --fix -c tslint.json", "git add"]
+    "*.ts": [
+      "tslint --fix -c tslint.json",
+      "git add"
+    ]
   },
   "license": "MIT",
   "devDependencies": {
