@@ -1,12 +1,12 @@
 import * as Phaser from "phaser-ce";
 
 export default class extends Phaser.Sprite {
-  constructor({ game, x, y, asset }) {
-    super(game, x, y, asset);
-    this.anchor.setTo(0.5);
-  }
+    constructor({ game, x, y, asset }) {
+        super(game, x, y, asset);
+        this.anchor.setTo(0.5);
+    }
 
-  public update() {
-    this.angle += 1;
-  }
+    public update() {
+        this.angle += 1;
+    }
 }
