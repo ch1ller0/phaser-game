@@ -1,6 +1,6 @@
 import * as Phaser from "phaser-ce";
 import Hero from "../sprites/Hero";
-import debug from "../utils/debug";
+import { debug } from "../utils/debug";
 
 const debugging = true;
 
@@ -39,8 +39,6 @@ class Game extends Phaser.State {
             x: 300,
             y: 400,
         });
-
-        game.camera.follow(this.hero);
 
         game.add.existing(this.hero);
         this.cursors = game.input.keyboard.createCursorKeys();

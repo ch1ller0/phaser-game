@@ -1,4 +1,4 @@
-const debug = (type, target = undefined) => {
+export const debug = (type, target = undefined) => {
     switch (type) {
         case "camera-line": return game.debug.camera(game.camera, 32 , 32);
         case "camera-info": return game.debug.cameraInfo(game.camera, 32, 32);
@@ -12,5 +12,3 @@ const debug = (type, target = undefined) => {
         default: return null;
     }
 };
-
-export default debug;
