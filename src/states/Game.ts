@@ -1,5 +1,8 @@
 import * as Phaser from "phaser-ce";
 import Hero from "../sprites/Hero";
+import { debug } from "../utils/debug";
+
+const debugging = false;
 
 interface Game {
     hero: any;
@@ -9,39 +12,40 @@ interface Game {
 }
 
 class Game extends Phaser.State {
-
     public create() {
-        game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.world.setBounds(0, 0, 900, 600);
 
-        this.platforms = game.add.group();
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        this.platforms = this.game.add.group();
         this.platforms.enableBody = true;
 
-        const ground = this.platforms.create(-50, game.world.height - 64, "platform");
+        const ground = this.platforms.create(0, this.game.world.height - 64, "platform");
         ground.scale.setTo(2, 2);
         ground.body.immovable = true;
 
-        let ledge = this.platforms.create(300, 100, "platform");
+        let ledge = this.platforms.create(400, 300, "platform");
         ledge.scale.setTo(1, 0.5);
         ledge.body.immovable = true;
 
-        ledge = this.platforms.create(-50, 220, "platform");
+        ledge = this.platforms.create(0, 420, "platform");
         ledge.scale.setTo(0.5, 0.5);
         ledge.body.immovable = true;
 
         this.hero = new Hero({
             asset: "hero",
-            game,
+            game: this.game,
             x: 300,
-            y: 0,
+            y: 400,
         });
 
-        game.add.existing(this.hero);
-        this.cursors = game.input.keyboard.createCursorKeys();
+        this.game.add.existing(this.hero);
+        this.cursors = this.game.input.keyboard.createCursorKeys();
         this.hero.dir = false;
     }
 
     public update() {
-        this.hitPlatform = game.physics.arcade.collide(this.hero, this.platforms);
+        this.hitPlatform = this.game.physics.arcade.collide(this.hero, this.platforms);
         this.hero.body.velocity.x = 0;
 
         if (this.cursors.left.isDown) {
@@ -62,7 +66,12 @@ class Game extends Phaser.State {
         if (this.cursors.up.isDown && this.hero.body.touching.down && this.hitPlatform) {
             this.hero.body.velocity.y = -270;
         }
+    }
 
+    public render() {
+        if (debugging) {
+            debug("sprite-box", this.hero);
+        }
     }
 }
 

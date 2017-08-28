@@ -1,5 +1,5 @@
 import * as Phaser from "phaser-ce";
-import { centerGameObjects } from "../utils";
+import { centerGameObjects } from "../utils/centerGameObjects";
 
 interface Splash {
     loaderBar: any;
