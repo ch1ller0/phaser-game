@@ -4,6 +4,9 @@ export default class extends Phaser.Sprite {
     constructor({ game, x, y, asset }) {
         super(game, x, y, asset);
         this.anchor.setTo(0.5);
+
+        game.camera.follow(this);
+
         game.physics.arcade.enable(this);
 
         this.body.bounce.y = 0.2;
