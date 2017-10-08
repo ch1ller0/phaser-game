@@ -5,7 +5,9 @@
   "author": "leandro cabrera <leandcabrera@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch --colors",
+    "static": "webpack --watch --colors",
+    "server": "node src/server/index.js",
+    "server:watch": "nodemon src/server/index.js",
     "deploy": "webpack --config webpack.production.config.js",
     "test": "tslint --fix -c tslint.json 'src/**/*.ts'",
     "precommit": "lint-staged"
@@ -33,7 +35,9 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
+    "express": "^4.16.1",
     "phaser-ce": "^2.8.0",
+    "socket.io": "^2.0.3",
     "webfontloader": "^1.6.28"
   }
 }
