@@ -35,11 +35,6 @@ const log = (content, prefix = 'blank', color = 'white') => {
 
 app.use(express.static(process.cwd() + '/'));
 
-app.get('/dist', function(req, res, next) {
-  log('Request', 'exp', 'cyan');
-  res.sendFile(process.cwd() + '/index.html');
-});
-
 app.get('/', function(req, res, next) {
   log('Request', 'exp', 'cyan');
   res.sendFile(process.cwd() + '/index.html');
@@ -60,6 +55,7 @@ io.on('connection', function(client) {
   });
 });
 
-server.listen(config.port);
+server.listen(config.port, function () {
+  log('Listening on port ' + config.port, 'exp', 'blue');
+});
 
-log('Listening on port ' + config.port, 'exp', 'blue');

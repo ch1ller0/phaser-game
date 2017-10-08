@@ -2,7 +2,8 @@ import "p2";
 import * as Phaser from "phaser-ce";
 import "pixi";
 
-declare global { // tslint:disable
+// tslint:disable-next-line
+declare global {
     interface Window { game: any; }
 }
 window.game = window.game || {};

@@ -1,4 +1,5 @@
 import * as Phaser from "phaser-ce";
+import "../server/client";
 import Hero from "../sprites/Hero";
 import { debug } from "../utils/debug";
 
@@ -13,6 +14,9 @@ interface Game {
 
 class Game extends Phaser.State {
     public create() {
+        // tslint:disable-next-line
+        console.log(io() && "io is defined");
+
         this.game.world.setBounds(0, 0, 900, 600);
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);

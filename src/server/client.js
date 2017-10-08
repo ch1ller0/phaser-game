@@ -1,7 +1,8 @@
-const socket = io.connect('http://127.0.0.1:4004');
+const guestUrl = window.location.href;
+const socket = io.connect(guestUrl);
 
 socket.on('connect', function(data) {
-  socket.emit('join', 'Hello from client');
+  socket.emit('join', 'Hello from client : ' + guestUrl);
 });
 
 socket.on('broad', function(data) {
