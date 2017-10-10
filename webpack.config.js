@@ -30,14 +30,7 @@ module.exports = {
     watch: true,
     plugins: [
        definePlugin,
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.bundle.js'/* filename= */}),
-        new BrowserSyncPlugin({
-            host: process.env.IP || 'localhost',
-            port: process.env.PORT || 3000,
-            server: {
-                baseDir: ['./', './build']
-            }
-        })
+        new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.bundle.js'/* filename= */})
     ],
     module: {
         rules: [
@@ -61,4 +54,4 @@ module.exports = {
         },
         extensions: ['.js', '.ts']
     }
-}
+};

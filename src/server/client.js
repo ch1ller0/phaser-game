@@ -1,16 +1,28 @@
-const guestUrl = window.location.href;
-const socket = io.connect(guestUrl);
+const Client = {};
 
-socket.on('connect', function(data) {
-  socket.emit('join', 'Hello from client : ' + guestUrl);
+Client.guestUrl = window.location.href;
+Client.socket = io.connect(Client.guestUrl);
+
+Client.askNewPlayer = () => {
+    Client.socket.emit('newplayer');
+};
+
+Client.socket.on('newplayer',function(data){
+    const Game = game.state.callbackContext
+    Game.addNewPlayer(data.id,data.x,data.y);
 });
 
-socket.on('broad', function(data) {
-  document.getElementById('text').innerHTML += data;
+Client.socket.on('allplayers',function(data){
+    console.log(data);
+    const Game = game.state.callbackContext;
+    for(let i = 0; i < data.length; i++){
+        Game.addNewPlayer(data[i].id,data[i].x,data[i].y);
+    }
 });
 
-document.getElementById('form').addEventListener('submit', function(e){
-  e.preventDefault();
-  const message = document.getElementById('input').value;
-  socket.emit('messages', message);
+Client.socket.on('remove',function(id){
+    const Game = game.state.callbackContext;
+    Game.removePlayer(id);
 });
+
+export default Client;
