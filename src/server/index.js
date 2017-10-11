@@ -49,8 +49,13 @@ io.on('connection', socket => {
             x: randomInt(100,400),
             y: randomInt(100,400)
         };
-        socket.emit('allplayers',getAllPlayers());
-        socket.broadcast.emit('newplayer',socket.player);
+        socket.emit('allplayers', {
+            allPlayers: getAllPlayers(),
+            thisPlayerId: socket.player.id
+        });
+        socket.broadcast.emit('newplayer', {
+            hero: socket.player
+        });
 
         log(`New Player ${socket.player.id}`, 'exp', 'cyan');
 

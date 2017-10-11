@@ -1,11 +1,13 @@
 import * as Phaser from "phaser-ce";
 
 export default class extends Phaser.Sprite {
-    constructor({ game, x, y, asset }) {
+    constructor({ game, x, y, asset, follow }) {
         super(game, x, y, asset);
         this.anchor.setTo(0.5);
 
-        game.camera.follow(this);
+        if (follow) {
+            game.camera.follow(this);
+        }
 
         game.physics.arcade.enable(this);
 

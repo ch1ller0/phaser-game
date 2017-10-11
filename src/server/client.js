@@ -7,16 +7,23 @@ Client.askNewPlayer = () => {
     Client.socket.emit('newplayer');
 };
 
-Client.socket.on('newplayer',function(data){
-    const Game = game.state.callbackContext
-    Game.addNewPlayer(data.id,data.x,data.y);
+Client.socket.on('newplayer',function(data) {
+    const {
+        hero
+    } = data;
+    const Game = game.state.callbackContext;
+    Game.addNewPlayer(hero.id, hero.x, hero.y);
 });
 
-Client.socket.on('allplayers',function(data){
-    console.log(data);
+Client.socket.on('allplayers',function(payload){
+    const {
+        allPlayers,
+        thisPlayerId
+    } = payload;
+    console.log(`Your ID is ${thisPlayerId}`);
     const Game = game.state.callbackContext;
-    for(let i = 0; i < data.length; i++){
-        Game.addNewPlayer(data[i].id,data[i].x,data[i].y);
+    for(let i = 0; i < allPlayers.length; i++){
+        Game.addNewPlayer(allPlayers[i].id,allPlayers[i].x,allPlayers[i].y, thisPlayerId);
     }
 });
 

@@ -9,6 +9,7 @@ interface Game {
     platforms: any;
     cursors: any;
     hitPlatform: any;
+    players: any;
 }
 
 class Game extends Phaser.State {
@@ -34,22 +35,26 @@ class Game extends Phaser.State {
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         // this.hero.dir = false;
+        this.players = {};
         Client.askNewPlayer();
     }
 
-    public addNewPlayer(id, x, y) {
-        this["hero" + id] = new Hero({
+    public addNewPlayer(id, x, y, thisPlayerId) {
+        const isHero = (thisPlayerId === id);
+        const name = isHero ? "hero" : `player${id}`;
+        this.players[name] = new Hero({
             asset: "hero",
+            follow: isHero,
             game: this.game,
             x,
             y,
         });
-        this.game.add.existing(this["hero" + id]);
+        this.game.add.existing(this.players[name]);
     }
 
     public removePlayer(id) {
-        this["hero" + id].destroy();
-        delete this["hero" + id];
+        this.players["player" + id].destroy();
+        delete this.players["player" + id];
     }
 
     public update() {
