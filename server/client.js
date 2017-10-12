@@ -7,7 +7,7 @@ Client.askNewPlayer = () => {
     Client.socket.emit('newplayer');
 };
 
-Client.socket.on('newplayer',function(data) {
+Client.socket.on('newplayer', data => {
     const {
         hero
     } = data;
@@ -15,7 +15,7 @@ Client.socket.on('newplayer',function(data) {
     Game.addNewPlayer(hero.id, hero.x, hero.y);
 });
 
-Client.socket.on('allplayers',function(payload){
+Client.socket.on('allplayers', payload => {
     const {
         allPlayers,
         thisPlayerId
@@ -27,9 +27,20 @@ Client.socket.on('allplayers',function(payload){
     }
 });
 
-Client.socket.on('remove',function(id){
+Client.socket.on('remove', id => {
     const Game = game.state.callbackContext;
     Game.removePlayer(id);
+});
+
+Client.socket.on('broad', message => {
+  document.getElementById('text').innerHTML += `<p>${message}</p>`;
+});
+
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const message = document.getElementById('input').value;
+  document.getElementById('input').value = '';
+  Client.socket.emit('messages', message);
 });
 
 export default Client;

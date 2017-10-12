@@ -1,5 +1,5 @@
 import * as Phaser from "phaser-ce";
-import Client from "../server/client";
+import Client from "../../server/client";
 import Hero from "../sprites/Hero";
 import { debug } from "../utils/debug";
 const debugging = false;

@@ -25,7 +25,8 @@ const log = (content, prefix = 'blank', color = 'white') => {
   const prefixes = {
     blank: '',
     exp: '::  Express  :: ',
-    sock: ':: Socket.io ::'
+    sock: ':: Socket.io ::',
+    chat: '::   Chat    ::'
   };
 
   if (prefix === 'client') return `${getTime()} ${content}`;
@@ -35,32 +36,44 @@ const log = (content, prefix = 'blank', color = 'white') => {
 
 app.use(express.static(process.cwd() + '/'));
 
-app.get('/', function(req, res, next) {
+app.get('/', (req, res, next) => {
   log('Request', 'exp', 'cyan');
   res.sendFile(process.cwd() + '/index.html');
 });
 
-server.lastPlayderID = 0;
+server.lastPlayderID = 1;
 
 io.on('connection', socket => {
     socket.on('newplayer', () => {
+
         socket.player = {
             id: server.lastPlayderID++,
             x: randomInt(100,400),
             y: randomInt(100,400)
         };
+
         socket.emit('allplayers', {
-            allPlayers: getAllPlayers(),
+            allPlayers: getAllPlayers().players,
             thisPlayerId: socket.player.id
         });
+
         socket.broadcast.emit('newplayer', {
             hero: socket.player
         });
 
-        log(`New Player ${socket.player.id}`, 'exp', 'cyan');
+        socket.on('messages', message => {
+          log(message, 'chat');
+          socket.emit('broad', message);
+          socket.broadcast.emit('broad', message);
+        })
 
-        socket.on('disconnect',function(){
-            log(`Disconnected Player ${socket.player.id}`, 'exp', 'red');
+        log(`Connected Player [${socket.player.id}]`, 'sock', 'cyan');
+        log(`Players Online   [${getAllPlayers().playersIds}]`, 'sock', 'cyan');
+
+
+      socket.on('disconnect', () => {
+            log(`Disconnected ID  [${socket.player.id}]`, 'sock', 'red');
+            log(`Players Online   [${getAllPlayers().playersIds}]`, 'sock', 'red');
             io.emit('remove',socket.player.id);
         });
     });
@@ -68,33 +81,27 @@ io.on('connection', socket => {
 
 function getAllPlayers() {
     let players = [];
+    let playersIds =[];
+
     Object.keys(io.sockets.connected).forEach( socketID => {
         const player = io.sockets.connected[socketID].player;
-        if (player) players.push(player);
+        if (player) {
+          players.push(player);
+          playersIds.push(player.id);
+        }
     });
-    return players;
+
+    return {
+      players,
+      playersIds
+    };
 }
 
 function randomInt (low, high) {
     return Math.floor(Math.random() * (high - low) + low);
 }
 
-// io.on('connection', function(client) {
-//   log('Client connected', 'sock', 'red');
-//
-//   client.on('join', function(data) {
-//     log(data, 'sock', 'yellow');
-//     client.emit('messages', log('Hi from server', 'client'));
-//   });
-//
-//   client.on('messages', function(data) {
-//     log(`Broad :${data}`, 'sock', 'gray');
-//     client.emit('broad', data);
-//     client.broadcast.emit('broad',data);
-//   });
-// });
-
-server.listen(config.port, function () {
+server.listen(config.port, () => {
   log('Listening on port ' + config.port, 'exp', 'blue');
 });
 

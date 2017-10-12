@@ -21,8 +21,8 @@ module.exports = {
 
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: './dist/',
+    path: path.resolve(__dirname, 'prod'),
+    publicPath: './prod/',
     filename: 'bundle.js'
   },
   plugins: [
