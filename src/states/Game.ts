@@ -2,14 +2,14 @@ import * as Phaser from "phaser-ce";
 import Client from "../../server/client";
 import Hero from "../sprites/Hero";
 import { debug } from "../utils/debug";
-const debugging = false;
 
-interface Game {
+interface Game extends Phaser.State {
     hero: any;
     platforms: any;
     cursors: any;
-    hitPlatform: any;
-    players: any;
+    players: {
+        hero?: object;
+    };
 }
 
 class Game extends Phaser.State {
@@ -34,7 +34,6 @@ class Game extends Phaser.State {
         ledge.body.immovable = true;
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
-        // this.hero.dir = false;
         this.players = {};
         Client.askNewPlayer();
     }
@@ -44,9 +43,8 @@ class Game extends Phaser.State {
         const name = isHero ? "hero" : `player${id}`;
         this.players[name] = new Hero({
             asset: "hero",
-            follow: isHero,
             game: this.game,
-            state: this,
+            isHero,
             x,
             y,
         });
@@ -59,8 +57,8 @@ class Game extends Phaser.State {
     }
 
     public render() {
-        if (debugging) {
-            debug("sprite-box", this.players.hero);
+        if (window.globalDebug && this.players.hero) {
+            debug("camera-info", this.players.hero);
         }
     }
 }

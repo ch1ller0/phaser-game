@@ -4,9 +4,13 @@ import "pixi";
 
 // tslint:disable-next-line
 declare global {
-    interface Window { game: any; }
+    interface Window {
+        game: any;
+        globalDebug: boolean;
+    }
 }
 window.game = window.game || {};
+window.globalDebug = true;
 
 import BootState from "./states/Boot";
 import GameState from "./states/Game";
@@ -14,7 +18,7 @@ import SplashState from "./states/Splash";
 
 import config from "./config";
 
-class Game extends Phaser.Game {
+class GlobalGame extends Phaser.Game {
     constructor() {
         const docElement = document.documentElement;
         const width = docElement.clientWidth > config.gameWidth ? config.gameWidth : docElement.clientWidth;
@@ -30,4 +34,4 @@ class Game extends Phaser.Game {
   }
 }
 
-window.game = new Game();
+window.game = new GlobalGame();

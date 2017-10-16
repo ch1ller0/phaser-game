@@ -4,7 +4,6 @@ export const debug = (type, target = undefined, {
 } = {}) => {
     const game = PIXI.game;
     switch (type) {
-        case "camera-line": return game.debug.camera(game.camera, color , filled);
         case "camera-info": return game.debug.cameraInfo(game.camera, 32, 32);
         case "display": return game.debug.spriteBounds(target);
         case "input": return game.debug.inputInfo(32, 32);
