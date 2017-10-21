@@ -8,7 +8,7 @@ interface Boot {
 class Boot extends Phaser.State {
     public init() {
         this.stage.backgroundColor = "#4a8bee";
-        this.fontsReady = false;
+        this.fontsReady = true; // no-internet
         this.fontsLoaded = this.fontsLoaded.bind(this);
     }
 

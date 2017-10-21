@@ -14,6 +14,8 @@ interface Game extends Phaser.State {
 
 class Game extends Phaser.State {
     public create() {
+
+        this.stage.disableVisibilityChange = true; // disable pause on blur
         this.game.world.setBounds(0, 0, 900, 600);
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -49,6 +51,12 @@ class Game extends Phaser.State {
             y,
         });
         this.game.add.existing(this.players[name]);
+    }
+
+    public playerMove({playerID, position}) {
+        if (this.players[`player${playerID}`]) {
+            this.players[`player${playerID}`].position = position;
+        }
     }
 
     public removePlayer(id) {

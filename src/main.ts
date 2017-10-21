@@ -31,7 +31,7 @@ class GlobalGame extends Phaser.Game {
         this.state.add("Game", GameState, false);
 
         this.state.start("Boot");
-  }
+    }
 }
 
 window.game = new GlobalGame();

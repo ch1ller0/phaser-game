@@ -7,6 +7,17 @@ Client.askNewPlayer = () => {
     Client.socket.emit('newplayer');
 };
 
+Client.playerMove = position => {
+  Client.socket.emit('coordinates', position);
+}
+
+Client.socket.on('coordinates', payload => {
+  const Game = game.state.callbackContext;
+  if (Game.playerMove) {
+    Game.playerMove(payload);
+  }
+});
+
 Client.socket.on('newplayer', data => {
     const {
         hero

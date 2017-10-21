@@ -61,11 +61,20 @@ io.on('connection', socket => {
             hero: socket.player
         });
 
+      socket.on('coordinates', position => {
+        socket.player.x = position.x;
+        socket.player.y = position.y;
+        socket.broadcast.emit('coordinates', {
+          position,
+          playerID: socket.player.id
+        });
+      });
+
         socket.on('messages', message => {
           log(message, 'chat');
           socket.emit('broad', message);
           socket.broadcast.emit('broad', message);
-        })
+        });
 
         log(`Connected Player [${socket.player.id}]`, 'sock', 'cyan');
         log(`Players Online   [${getAllPlayers().playersIds}]`, 'sock', 'cyan');
