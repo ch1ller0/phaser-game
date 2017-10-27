@@ -1,5 +1,5 @@
 import * as Phaser from "phaser-ce";
-import Client from "../../server/client";
+import Client from "../client/client.js";
 
 interface Hero extends Phaser.Sprite {
     state: any;
