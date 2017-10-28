@@ -54,8 +54,16 @@ class Game extends Phaser.State {
     }
 
     public playerMove({playerID, position}) {
-        if (this.players[`player${playerID}`]) {
-            this.players[`player${playerID}`].position = position;
+        const player = this.players[`player${playerID}`];
+        if (player) {
+            if (player.position.x > position.x) {
+                player.animations.play("left");
+            } else if (player.position.x < position.x) {
+                player.animations.play("right");
+            } else {
+                player.animations.stop();
+            }
+            player.position = position;
         }
     }
 
