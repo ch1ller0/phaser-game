@@ -1,5 +1,6 @@
 import * as Phaser from "phaser-ce";
 import Client from "../client/client.js";
+import {requestAnimationTimeout} from "../utils/requestAnimationTimeout";
 
 interface Hero extends Phaser.Sprite {
     state: any;
@@ -21,6 +22,13 @@ class Hero extends Phaser.Sprite {
             this.body.bounce.y = 0.2;
             this.body.gravity.y = 300;
             this.body.collideWorldBounds = true;
+
+            requestAnimationTimeout(100, () => {
+                Client.playerMove({
+                    x: this.body.position.x,
+                    y: this.body.position.y,
+                });
+            });
         }
 
         this.animations.add("left", [0, 1, 2, 3, 4, 5, 6], 15, true);
@@ -52,11 +60,6 @@ class Hero extends Phaser.Sprite {
             if (this.state.cursors.up.isDown && this.body.touching.down && this.state.hitPlatform) {
                 this.body.velocity.y = -270;
             }
-
-            Client.playerMove({
-                x: this.body.position.x,
-                y: this.body.position.y,
-            });
         }
     }
 }
